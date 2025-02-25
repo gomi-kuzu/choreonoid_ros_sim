@@ -1,0 +1,26 @@
+version: "3"
+services:
+  ros2_chore:
+    container_name: for_wrs_env
+    build: .
+    shm_size: "4gb"
+    # ポートの設定("ホスト：コンテナ")
+    ports:
+      - "5900:80"
+    
+    # 環境変数の設定
+    environment:
+      - DISPLAY=$DISPLAY
+    network_mode: "host"
+    
+    security_opt:
+        - seccomp:unconfined
+  
+    # ボリューム(データの永続化の場所)の設定(ホスト:コンテナ)
+    volumes:
+      - ./ros_src:/home/ubuntu/ros2_ws/src:z
+      # - /tmp/.X11-unix/X0:/tmp/.X11-unix/X0
+    
+    tty: true
+    
+    command: start.sh
