@@ -5,7 +5,7 @@
 ### 立ち上げ
 - 1. `docker compose up -d`
 - 2. コンテナ内に入る
-- 3. `cd ros2/src`
+- 3. `cd ros2_ws/src`
 - 4. `chmod 777 run.sh`
 - 5. `./run.sh`
 
