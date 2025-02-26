@@ -9,6 +9,7 @@
 - 3. `cd ros2_ws/src`
 - 4. `chmod 777 run.sh`
 - 5. `./run.sh`
+- 6. `source ~/.bashrc`
 
 ### 備考
 - 上記の操作で、GUI利用可能なコンテナでROS2とchoreonoidが動く環境がセットアップできる
