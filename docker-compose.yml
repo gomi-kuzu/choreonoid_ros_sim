@@ -5,9 +5,7 @@ services:
     build: .
     shm_size: "4gb"
     # ポートの設定("ホスト：コンテナ")
-    ports:
-      - "5900:80"
-    
+     
     # 環境変数の設定
     environment:
       - DISPLAY=$DISPLAY
