@@ -15,19 +15,29 @@ links:
               0, 0, 0.22 ]
     material: Slider
     elements:
+      - 
+        type: Visual
+        elements:
+          - 
+            type: Resource
+            uri: "../meshes/vmega_body.dae"
       -
-        type: Shape
-        translation: [ -0.1, 0, 0.0975 ]
-        geometry:
-          type: Box
-          size: [ 0.36, 0.24, 0.135 ]
-      -
-        type: Shape
-        translation: [ -0.255, 0, 0.02 ]
-        geometry:
-          type: Cylinder
-          height: 0.01
-          radius: 0.02
+        type: Collision
+        elements:
+          - 
+            type: Shape
+            translation: [ -0.1, 0, 0.0975 ]
+            geometry:
+              type: Box
+              size: [ 0.36, 0.24, 0.135 ]
+          -
+            type: Shape
+            translation: [ -0.255, 0, 0.02 ]
+            geometry:
+              type: Cylinder
+              height: 0.01
+              radius: 0.02
+
   -
     name: LeftWheel
     parent: Chassis
@@ -42,16 +52,26 @@ links:
                 0, 0, 0.0012 ]
     material: Tire
     elements:
-      - &TireShape
-        type: Shape
-        geometry:
-          type: Cylinder
-          height: 0.03
-          radius: 0.076
-          division_number: 60
-        appearance:
-          material:
-            diffuseColor: [ 0.2, 0.2, 0.2 ]
+      -
+        type: Visual
+        elements:
+          -
+            type: Resource
+            uri: "../meshes/vmega_wheel.dae"
+            rotation: [ 0, 0, 1, 180 ]
+            appearance:
+              material:
+                diffuseColor: [ 0.2, 0.2, 0.2 ]
+      - 
+        type: Collision
+        elements:
+          - &TireShape
+            type: Shape
+            geometry:
+              type: Cylinder
+              height: 0.03
+              radius: 0.076
+              division_number: 60
   -
     name: RightWheel
     parent: Chassis
@@ -66,4 +86,13 @@ links:
               0, 0, 0.0012 ]
     material: Tire
     elements:
-      - *TireShape
+      - 
+        type: Visual
+        elements:
+          -
+            type: Resource
+            uri: "../meshes/vmega_wheel.dae"
+      - 
+        type: Collision
+        elements:
+          - *TireShape

@@ -7,29 +7,99 @@ items:
   children:
     -
       id: 1
-      name: "MobileRobot"
+      name: "World"
       plugin: Body
-      class: BodyItem
+      class: WorldItem
       is_checked: true
       data:
-        file: "../model/mobile_robot.body"
-        format: CHOREONOID-BODY
-        rootPosition: [ 0, 0, 0 ]
-        rootAttitude: [
-          1, 0, 0,
-          0, 1, 0,
-          0, 0, 1 ]
-        jointDisplacements: [ 0, 0 ]
-        initialRootPosition: [ 0, 0, 0 ]
-        initialRootAttitude: [
-          1, 0, 0,
-          0, 1, 0,
-          0, 0, 1 ]
-        fix_root: false
-        collisionDetection: true
-        selfCollisionDetection: false
-        lock_location: false
-        scene_sensitive: true
+        collision_detection: false
+        collision_detector: AISTCollisionDetector
+        default_material_table_file: "${SHARE}/default/materials.yaml"
+      children:
+        -
+          id: 2
+          name: "MobileRobot"
+          plugin: Body
+          class: BodyItem
+          is_selected: true
+          is_checked: true
+          data:
+            file: "../model/mobile_robot.body"
+            format: CHOREONOID-BODY
+            rootPosition: [ 0.000499104647, 1.98596832e-05, -0.0003095947 ]
+            rootAttitude: [
+              0.999961316, 0.00871902777, 0.00116014295,
+              -0.00871922013, 0.999961974, 0.000160852635,
+              -0.00115869636, -0.000170961954, 0.999999314 ]
+            jointDisplacements: [ 1.27728, -0.498799 ]
+            initialRootPosition: [ 0.000499104647, 1.98596832e-05, -0.0003095947 ]
+            initialRootAttitude: [
+              0.999961316, 0.00871902777, 0.00116014295,
+              -0.00871922013, 0.999961974, 0.000160852635,
+              -0.00115869636, -0.000170961954, 0.999999314 ]
+            fix_root: false
+            collisionDetection: true
+            selfCollisionDetection: false
+            lock_location: false
+            scene_sensitive: true
+        -
+          id: 4
+          name: "AISTSimulator"
+          plugin: Body
+          class: AISTSimulatorItem
+          is_checked: true
+          data:
+            time_step: 0.001
+            realtime_sync_mode: compensatory
+            recording: tail
+            time_range_mode: unlimited
+            time_length: 300
+            is_active_control_time_range_mode: false
+            output_all_link_positions: false
+            output_device_states: true
+            use_controller_threads: true
+            record_collision_data: false
+            controller_options: ""
+            block_scene_view_edit_mode: false
+            time_sync_items: [ 3 ]
+            dynamicsMode: "Forward dynamics"
+            integrationMode: semi-implicit_euler
+            gravity: [ 0, 0, -9.80665 ]
+            min_friction_coefficient: 0
+            max_friction_coefficient: 100
+            cullingThresh: 0.005
+            contactCullingDepth: 0.05
+            errorCriterion: 0.001
+            maxNumIterations: 25
+            contactCorrectionDepth: 0.00025
+            contactCorrectionVelocityRatio: 5
+            kinematicWalking: false
+            2Dmode: false
+            oldAccelSensorMode: false
+        -
+          id: 5
+          name: "Floor"
+          plugin: Body
+          class: BodyItem
+          is_checked: true
+          data:
+            file: "${SHARE}/model/misc/floor.body"
+            format: CHOREONOID-BODY
+            rootPosition: [ 0, 0, -0.1 ]
+            rootAttitude: [
+              1, 0, 0,
+              0, 1, 0,
+              0, 0, 1 ]
+            initialRootPosition: [ 0, 0, -0.1 ]
+            initialRootAttitude: [
+              1, 0, 0,
+              0, 1, 0,
+              0, 0, 1 ]
+            fix_root: true
+            collisionDetection: true
+            selfCollisionDetection: false
+            lock_location: false
+            scene_sensitive: true
 views:
   -
     id: 0
@@ -42,7 +112,7 @@ views:
     class: ItemTreeView
     mounted: true
     state:
-      expanded: [ ]
+      expanded: [ 1, 2 ]
   -
     id: 2
     plugin: Base
@@ -53,7 +123,7 @@ views:
       unique_rpy: false
       show_quaternion: false
       show_rotation_matrix: false
-      coordinate: parent
+      coordinate: world
   -
     id: 3
     plugin: Base
@@ -74,9 +144,9 @@ views:
         -
           camera: [ System, Perspective ]
           isCurrent: true
-          eye: [ 2.84741, 2.61905, 1.04946 ]
-          direction: [ -0.730971, -0.672348, -0.116746 ]
-          up: [ -0.0859258, -0.0790346, 0.993162 ]
+          eye: [ 1.10795, 1.2025, 0.946676 ]
+          direction: [ -0.640839, -0.577721, -0.505533 ]
+          up: [ -0.375478, -0.338497, 0.862807 ]
         -
           camera: [ System, Orthographic ]
           orthoHeight: 20
@@ -89,7 +159,7 @@ views:
       ambient_light_intensity: 0.5
       head_light: true
       head_light_intensity: 0.5
-      world_light_shadow: true
+      world_light_shadow: false
       shadow_lights:
         - { index: 0, enabled: false }
         - { index: 1, enabled: false }
@@ -157,7 +227,7 @@ views:
     mounted: true
 toolbars:
   "TimeBar":
-    current_time: 0
+    current_time: 3.951
     min_time: 0
     max_time: 30
     frame_rate: 1000
@@ -179,6 +249,9 @@ toolbars:
     penetrationBlockDepth: 0.0005
     lazyCollisionDetectionMode: true
 Body:
+  "BodySelectionManager":
+    current_body_item: 2
+    current_link: "Chassis"
   "KinematicFaultChecker":
     checkJointPositions: true
     angleMargin: 0
@@ -191,7 +264,12 @@ Body:
   "OperableSceneBody":
     scene_bodies:
       -
-        body_item: 1
+        body_item: 2
+        show_cm: false
+        show_cm_projection: false
+        show_zmp: false
+      -
+        body_item: 5
         show_cm: false
         show_cm_projection: false
         show_zmp: false
@@ -207,17 +285,17 @@ viewAreas:
     contents:
       type: splitter
       orientation: horizontal
-      sizes: [ 1272, 404 ]
+      sizes: [ 1404, 446 ]
       children:
         -
           type: splitter
           orientation: horizontal
-          sizes: [ 329, 939 ]
+          sizes: [ 363, 1037 ]
           children:
             -
               type: splitter
               orientation: vertical
-              sizes: [ 467, 467 ]
+              sizes: [ 508, 507 ]
               children:
                 -
                   type: pane
@@ -229,7 +307,7 @@ viewAreas:
             -
               type: splitter
               orientation: vertical
-              sizes: [ 701, 233 ]
+              sizes: [ 762, 253 ]
               children:
                 -
                   type: pane
@@ -241,7 +319,7 @@ viewAreas:
         -
           type: splitter
           orientation: vertical
-          sizes: [ 184, 750 ]
+          sizes: [ 200, 815 ]
           children:
             -
               type: pane
@@ -249,7 +327,7 @@ viewAreas:
             -
               type: splitter
               orientation: vertical
-              sizes: [ 266, 480 ]
+              sizes: [ 289, 522 ]
               children:
                 -
                   type: pane
