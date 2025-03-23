@@ -42,6 +42,18 @@ items:
             selfCollisionDetection: false
             lock_location: false
             scene_sensitive: true
+          children:
+            -
+              id: 3
+              name: "SimpleController"
+              plugin: Body
+              class: SimpleControllerItem
+              data:
+                isNoDelayMode: false
+                controllerOptions: ""
+                base_directory: "Controller directory"
+                reloading: false
+                export_symbols: false
         -
           id: 4
           name: "AISTSimulator"
@@ -61,7 +73,6 @@ items:
             record_collision_data: false
             controller_options: ""
             block_scene_view_edit_mode: false
-            time_sync_items: [ 3 ]
             dynamicsMode: "Forward dynamics"
             integrationMode: semi-implicit_euler
             gravity: [ 0, 0, -9.80665 ]
