@@ -1,5 +1,7 @@
 choreonoid_add_simple_controller(MyMobileRobotDriveTester MobileRobotDriveTester.cpp)
 
+choreonoid_add_simple_controller(MyCrawlerDriveTester CrawlerDriveTester.cpp)
+
 choreonoid_add_simple_controller(MyMobileRobotDriveController MobileRobotDriveController.cpp)
 
 ament_target_dependencies(MyMobileRobotDriveController rclcpp geometry_msgs)
