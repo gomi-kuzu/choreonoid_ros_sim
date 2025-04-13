@@ -109,12 +109,12 @@ items:
           data:
             file: "../model/mobile_robot.body"
             format: CHOREONOID-BODY
-            rootPosition: [ -3.89904562, 1.00000012, -0.000256049079 ]
+            rootPosition: [ -2.78988993, -0.50670112, -0.00026466574 ]
             rootAttitude: [
-              0.999999999, 2.79984547e-05, 2.37266823e-05,
-              -2.79984626e-05, 1, 3.33350443e-07,
-              -2.37266729e-05, -3.34014754e-07, 1 ]
-            jointDisplacements: [ 0.724724, 0.718882 ]
+              0.999999407, 0.00108707704, 5.78114333e-05,
+              -0.00108707788, 0.999999409, 1.44295844e-05,
+              -5.77957131e-05, -1.44924213e-05, 0.999999998 ]
+            jointDisplacements: [ 4732.79, 4420.95 ]
             initialJointDisplacements: [ 0, 0 ]
             initialRootPosition: [ -3.9, 1, 0 ]
             initialRootAttitude: [
@@ -132,6 +132,7 @@ items:
               name: "DriveController"
               plugin: Body
               class: SimpleControllerItem
+              is_selected: true
               data:
                 isNoDelayMode: false
                 controllerOptions: ""
@@ -148,11 +149,11 @@ items:
           data:
             file: "../model/crawler.body"
             format: CHOREONOID-BODY
-            rootPosition: [ 1.53245177, 1.50102192, 0.309769888 ]
+            rootPosition: [ 1.53245147, 1.50102482, 0.309771851 ]
             rootAttitude: [
-              -0.999996548, -0.00262561173, -9.88074708e-05,
-              -0.0026256116, 0.999996553, -1.46084239e-06,
-              9.88109658e-05, -1.20140731e-06, -0.999999995 ]
+              -0.999996553, -0.00262389344, -9.83541987e-05,
+              -0.0026238913, 0.999996557, -2.18713732e-05,
+              9.84112482e-05, -2.16132271e-05, -0.999999995 ]
             jointDisplacements: [ 0, 0 ]
             initialRootPosition: [ -4.5, 1.5, 0.1 ]
             initialRootAttitude: [
@@ -308,7 +309,7 @@ views:
     mounted: true
 toolbars:
   "TimeBar":
-    current_time: 9.753
+    current_time: 65.461
     min_time: 0
     max_time: 120.307
     frame_rate: 1000
@@ -331,8 +332,8 @@ toolbars:
     lazyCollisionDetectionMode: true
 Body:
   "BodySelectionManager":
-    current_body_item: 8
-    current_link: "BODY"
+    current_body_item: 5
+    current_link: "Chassis"
   "KinematicFaultChecker":
     checkJointPositions: true
     angleMargin: 0
