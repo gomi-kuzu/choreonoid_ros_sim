@@ -10,6 +10,7 @@ services:
     environment:
       - DISPLAY=$DISPLAY
     network_mode: "host"
+    ipc: host
     
     security_opt:
         - seccomp:unconfined
