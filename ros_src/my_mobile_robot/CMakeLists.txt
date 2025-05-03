@@ -32,3 +32,5 @@ if(BUILD_TESTING)
 endif()
 
 ament_package()
+
+install(DIRECTORY project launch config model meshes DESTINATION share/${PROJECT_NAME})
