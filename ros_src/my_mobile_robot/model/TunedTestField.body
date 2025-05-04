@@ -299,3 +299,19 @@ links:
     elements:
       Shape:
         geometry: { type: Resource, uri: "resource/snap_obj3.stl" }
+  -
+    name: snap_obj3
+    translation: [ 3.3, 1.7, 0.1605 ]
+    rotation: [ 0, 0, 1, 180 ] 
+    <<: *CommonSettings
+    elements:
+      Shape:
+        geometry: { type: Resource, uri: "resource/snap_obj3.stl" }
+  -
+    name: snap_obj4
+    translation: [ 0.05, -0.75, 0.1605 ]
+    rotation: [ 0, 0, 1, -90 ] 
+    <<: *CommonSettings
+    elements:
+      Shape:
+        geometry: { type: Resource, uri: "resource/snap_obj3.stl" }

@@ -7,52 +7,95 @@ items:
   children:
     -
       id: 1
-      name: "TestField"
+      name: "World"
       plugin: Body
-      class: BodyItem
-      is_checked: true
+      class: WorldItem
       data:
-        file: "../model/TunedTestField.body"
-        format: CHOREONOID-BODY
-        rootPosition: [ 1, 0, 0 ]
-        rootAttitude: [
-          1, 0, 0,
-          0, 1, 0,
-          0, 0, 1 ]
-        initialRootPosition: [ 1, 0, 0 ]
-        initialRootAttitude: [
-          1, 0, 0,
-          0, 1, 0,
-          0, 0, 1 ]
-        fix_root: true
-        collisionDetection: true
-        selfCollisionDetection: false
-        lock_location: false
-        scene_sensitive: true
+        collision_detection: false
+        collision_detector: AISTCollisionDetector
+        default_material_table_file: "${SHARE}/default/materials.yaml"
+      children:
+        -
+          id: 2
+          name: "Floor"
+          plugin: Body
+          class: BodyItem
+          is_checked: true
+          data:
+            file: "../../choreonoid/share/model/misc/floor.body"
+            format: CHOREONOID-BODY
+            rootPosition: [ 0, 0, -0.1 ]
+            rootAttitude: [
+              1, 0, 0,
+              0, 1, 0,
+              0, 0, 1 ]
+            initialRootPosition: [ 0, 0, -0.1 ]
+            initialRootAttitude: [
+              1, 0, 0,
+              0, 1, 0,
+              0, 0, 1 ]
+            fix_root: true
+            collisionDetection: true
+            selfCollisionDetection: false
+            lock_location: false
+            scene_sensitive: true
+          children:
+            -
+              id: 3
+              name: "TestField"
+              plugin: Body
+              class: BodyItem
+              is_checked: true
+              data:
+                file: "../model/TunedTestField.body"
+                format: CHOREONOID-BODY
+                rootPosition: [ 1, 0, 0 ]
+                rootAttitude: [
+                  1, 0, 0,
+                  0, 1, 0,
+                  0, 0, 1 ]
+                initialRootPosition: [ 1, 0, 0 ]
+                initialRootAttitude: [
+                  1, 0, 0,
+                  0, 1, 0,
+                  0, 0, 1 ]
+                fix_root: true
+                collisionDetection: true
+                selfCollisionDetection: false
+                lock_location: false
+                scene_sensitive: true
     -
-      id: 2
-      name: "Floor"
+      id: 4
+      name: "AISTSimulator"
       plugin: Body
-      class: BodyItem
-      is_checked: true
+      class: AISTSimulatorItem
       data:
-        file: "../../choreonoid/share/model/misc/floor.body"
-        format: CHOREONOID-BODY
-        rootPosition: [ 0, 0, -0.1 ]
-        rootAttitude: [
-          1, 0, 0,
-          0, 1, 0,
-          0, 0, 1 ]
-        initialRootPosition: [ 0, 0, -0.1 ]
-        initialRootAttitude: [
-          1, 0, 0,
-          0, 1, 0,
-          0, 0, 1 ]
-        fix_root: true
-        collisionDetection: true
-        selfCollisionDetection: false
-        lock_location: false
-        scene_sensitive: true
+        time_step: 0.001
+        realtime_sync_mode: compensatory
+        recording: tail
+        time_range_mode: unlimited
+        time_length: 300
+        is_active_control_time_range_mode: false
+        output_all_link_positions: false
+        output_device_states: true
+        use_controller_threads: true
+        record_collision_data: false
+        controller_options: ""
+        block_scene_view_edit_mode: false
+        dynamicsMode: "Forward dynamics"
+        integrationMode: semi-implicit_euler
+        gravity: [ 0, 0, -9.80665 ]
+        min_friction_coefficient: 0
+        max_friction_coefficient: 100
+        cullingThresh: 0.005
+        contactCullingDepth: 0.05
+        errorCriterion: 0.001
+        maxNumIterations: 25
+        contactCorrectionDepth: 0.00025
+        contactCorrectionVelocityRatio: 5
+        kinematicWalking: false
+        2Dmode: false
+        oldAccelSensorMode: false
 views:
   -
     id: 0
@@ -69,7 +112,7 @@ views:
     class: ItemTreeView
     mounted: true
     state:
-      expanded: [ ]
+      expanded: [ 1, 2 ]
   -
     id: 3
     plugin: Base
@@ -101,9 +144,9 @@ views:
         -
           camera: [ System, Perspective ]
           isCurrent: true
-          eye: [ -13.6697, 1.98559, 6.20884 ]
-          direction: [ 0.936523, 0.0281041, -0.349477 ]
-          up: [ 0.34932, 0.0104827, 0.936945 ]
+          eye: [ -8.03775, 0.714961, 3.6393 ]
+          direction: [ 0.968682, -0.080766, -0.234801 ]
+          up: [ 0.233989, -0.0195093, 0.972044 ]
         -
           camera: [ System, Orthographic ]
           orthoHeight: 20
@@ -206,6 +249,9 @@ toolbars:
     penetrationBlockDepth: 0.0005
     lazyCollisionDetectionMode: true
 Body:
+  "BodySelectionManager":
+    current_body_item: 3
+    current_link: "FLOOR"
   "KinematicFaultChecker":
     checkJointPositions: true
     angleMargin: 0
@@ -218,12 +264,12 @@ Body:
   "OperableSceneBody":
     scene_bodies:
       -
-        body_item: 1
+        body_item: 2
         show_cm: false
         show_cm_projection: false
         show_zmp: false
       -
-        body_item: 2
+        body_item: 3
         show_cm: false
         show_cm_projection: false
         show_zmp: false
