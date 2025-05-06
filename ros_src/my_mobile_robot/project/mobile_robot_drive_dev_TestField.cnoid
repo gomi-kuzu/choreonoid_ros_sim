@@ -10,7 +10,6 @@ items:
       name: "World"
       plugin: Body
       class: WorldItem
-      is_checked: true
       data:
         collision_detection: false
         collision_detector: AISTCollisionDetector
@@ -18,47 +17,12 @@ items:
       children:
         -
           id: 2
-          name: "AISTSimulator"
-          plugin: Body
-          class: AISTSimulatorItem
-          is_selected: true
-          is_checked: true
-          data:
-            time_step: 0.001
-            realtime_sync_mode: compensatory
-            recording: tail
-            time_range_mode: unlimited
-            time_length: 300
-            is_active_control_time_range_mode: false
-            output_all_link_positions: false
-            output_device_states: true
-            use_controller_threads: true
-            record_collision_data: false
-            controller_options: ""
-            block_scene_view_edit_mode: false
-            time_sync_items: [ 7, 11 ]
-            dynamicsMode: "Forward dynamics"
-            integrationMode: semi-implicit_euler
-            gravity: [ 0, 0, -9.80665 ]
-            min_friction_coefficient: 0
-            max_friction_coefficient: 100
-            cullingThresh: 0.005
-            contactCullingDepth: 0.05
-            errorCriterion: 0.001
-            maxNumIterations: 25
-            contactCorrectionDepth: 0.00025
-            contactCorrectionVelocityRatio: 5
-            kinematicWalking: false
-            2Dmode: false
-            oldAccelSensorMode: false
-        -
-          id: 3
           name: "Floor"
           plugin: Body
           class: BodyItem
           is_checked: true
           data:
-            file: "${SHARE}/model/misc/floor.body"
+            file: "../../choreonoid/share/model/misc/floor.body"
             format: CHOREONOID-BODY
             rootPosition: [ 0, 0, -0.1 ]
             rootAttitude: [
@@ -75,31 +39,64 @@ items:
             selfCollisionDetection: false
             lock_location: false
             scene_sensitive: true
-          children:
-            -
-              id: 4
-              name: "TestField"
-              plugin: Body
-              class: BodyItem
-              is_checked: true
-              data:
-                file: "../model/TestField.body"
-                format: CHOREONOID-BODY
-                rootPosition: [ 1, 0, 0 ]
-                rootAttitude: [
-                  1, 0, 0,
-                  0, 1, 0,
-                  0, 0, 1 ]
-                initialRootPosition: [ 1, 0, 0 ]
-                initialRootAttitude: [
-                  1, 0, 0,
-                  0, 1, 0,
-                  0, 0, 1 ]
-                fix_root: true
-                collisionDetection: true
-                selfCollisionDetection: false
-                lock_location: false
-                scene_sensitive: true
+        -
+          id: 3
+          name: "TestField"
+          plugin: Body
+          class: BodyItem
+          is_checked: true
+          data:
+            file: "../model/TestField.body"
+            format: CHOREONOID-BODY
+            rootPosition: [ 1, 0, 0 ]
+            rootAttitude: [
+              1, 0, 0,
+              0, 1, 0,
+              0, 0, 1 ]
+            initialRootPosition: [ 1, 0, 0 ]
+            initialRootAttitude: [
+              1, 0, 0,
+              0, 1, 0,
+              0, 0, 1 ]
+            fix_root: true
+            collisionDetection: true
+            selfCollisionDetection: false
+            lock_location: false
+            scene_sensitive: true
+        -
+          id: 4
+          name: "AISTSimulator"
+          plugin: Body
+          class: AISTSimulatorItem
+          is_selected: true
+          data:
+            time_step: 0.001
+            realtime_sync_mode: compensatory
+            recording: tail
+            time_range_mode: unlimited
+            time_length: 300
+            is_active_control_time_range_mode: false
+            output_all_link_positions: false
+            output_device_states: true
+            use_controller_threads: true
+            record_collision_data: false
+            controller_options: ""
+            block_scene_view_edit_mode: false
+            time_sync_items: [ 10 ]
+            dynamicsMode: "Forward dynamics"
+            integrationMode: semi-implicit_euler
+            gravity: [ 0, 0, -9.80665 ]
+            min_friction_coefficient: 0
+            max_friction_coefficient: 100
+            cullingThresh: 0.005
+            contactCullingDepth: 0.05
+            errorCriterion: 0.001
+            maxNumIterations: 25
+            contactCorrectionDepth: 0.00025
+            contactCorrectionVelocityRatio: 5
+            kinematicWalking: false
+            2Dmode: false
+            oldAccelSensorMode: false
         -
           id: 5
           name: "Crawler"
@@ -107,14 +104,15 @@ items:
           class: BodyItem
           is_checked: true
           data:
-            file: "../model/crawler.body"
+            file: "../model/crawler_mark3.body"
             format: CHOREONOID-BODY
-            rootPosition: [ 1.53541254, 1.5449188, 0.309764162 ]
+            rootPosition: [ -4.50000008, 1.50000001, 0.0997501425 ]
             rootAttitude: [
-              -0.999998495, -0.00173033468, 0.000126476643,
-              -0.00173033656, 0.999998503, -1.48064245e-05,
-              -0.000126450833, -1.50252494e-05, -0.999999992 ]
-            jointDisplacements: [ 0, 0 ]
+              1, -4.81783331e-09, -7.88759268e-07,
+              4.81783331e-09, 1, 3.67312434e-13,
+              7.88759268e-07, -3.71112544e-13, 1 ]
+            jointDisplacements: [ 0, 0, -2.23124e-10, -1.43723e-11, -106.476, -106.476 ]
+            initialJointDisplacements: [ 0, 0, 0, 0, 0, 0 ]
             initialRootPosition: [ -4.5, 1.5, 0.1 ]
             initialRootAttitude: [
               1, 0, 0,
@@ -128,66 +126,38 @@ items:
           children:
             -
               id: 6
-              name: "SimpleController"
-              plugin: Body
-              class: SimpleControllerItem
-              data:
-                isNoDelayMode: false
-                controllerOptions: ""
-                controller: "MyCrawlerDriveTester"
-                base_directory: "Controller directory"
-                reloading: false
-                export_symbols: false
-        -
-          id: 8
-          name: "MobileRobot"
-          plugin: Body
-          class: BodyItem
-          is_checked: true
-          data:
-            file: "../model/mobile_robot_pantilt.body"
-            format: CHOREONOID-BODY
-            rootPosition: [ -2.33481645, 0.921399728, 0.159731267 ]
-            rootAttitude: [
-              0.970550586, 0.240897398, 5.91013754e-05,
-              -0.240897394, 0.970550586, -7.12116499e-05,
-              -7.45155758e-05, 5.48771412e-05, 0.999999996 ]
-            jointDisplacements: [ 1432.99, 1405.54, -17.0984, 278.91 ]
-            initialJointDisplacements: [ 0, 0, 0, 0 ]
-            initialRootPosition: [ -3.9, 1, 0 ]
-            initialRootAttitude: [
-              1, 0, 0,
-              0, 1, 0,
-              0, 0, 1 ]
-            fix_root: false
-            collisionDetection: true
-            selfCollisionDetection: false
-            lock_location: false
-            scene_sensitive: true
-          children:
-            -
-              id: 9
               name: "DriveController"
               plugin: Body
               class: SimpleControllerItem
-              is_checked: true
               data:
                 isNoDelayMode: false
                 controllerOptions: ""
-                controller: "MyMobileRobotDriveController"
+                controller: "MyCrawlerDriveController"
                 base_directory: "Controller directory"
                 reloading: false
                 export_symbols: false
             -
-              id: 10
-              name: "PanTiltController"
+              id: 8
+              name: "SubDriveController"
               plugin: Body
               class: SimpleControllerItem
-              is_checked: true
+              is_selected: true
               data:
                 isNoDelayMode: false
                 controllerOptions: ""
-                controller: "MobileRobotPanTiltController"
+                controller: "MySubCrawlerDriveController"
+                base_directory: "Controller directory"
+                reloading: false
+                export_symbols: false
+            -
+              id: 9
+              name: "PantiltController"
+              plugin: Body
+              class: SimpleControllerItem
+              data:
+                isNoDelayMode: false
+                controllerOptions: ""
+                controller: "MyMobileRobotPanTiltController"
                 base_directory: "Controller directory"
                 reloading: false
                 export_symbols: false
@@ -207,7 +177,7 @@ views:
     class: ItemTreeView
     mounted: true
     state:
-      expanded: [ 1, 2, 3, 5, 6, 8, 9, 10 ]
+      expanded: [ 1, 5 ]
   -
     id: 3
     plugin: Base
@@ -239,9 +209,9 @@ views:
         -
           camera: [ System, Perspective ]
           isCurrent: true
-          eye: [ -8.1202, -0.351933, 4.8561 ]
-          direction: [ 0.779376, 0.162243, -0.605186 ]
-          up: [ 0.592485, 0.123338, 0.796084 ]
+          eye: [ -6.47145, 1.77004, 1.27476 ]
+          direction: [ 0.853991, -0.16242, -0.494286 ]
+          up: [ 0.485582, -0.0923527, 0.869299 ]
         -
           camera: [ System, Orthographic ]
           orthoHeight: 20
@@ -254,7 +224,7 @@ views:
       ambient_light_intensity: 0.5
       head_light: true
       head_light_intensity: 0.5
-      world_light_shadow: false
+      world_light_shadow: true
       shadow_lights:
         - { index: 0, enabled: false }
         - { index: 1, enabled: false }
@@ -297,10 +267,6 @@ views:
     state:
       element_type: all
       listing_mode: list
-      body_items:
-        -
-          id: 3
-          selected_links: [ 0 ]
   -
     id: 8
     plugin: Body
@@ -326,9 +292,9 @@ views:
     mounted: true
 toolbars:
   "TimeBar":
-    current_time: 69.701
+    current_time: 12.145
     min_time: 0
-    max_time: 217.853
+    max_time: 1364.7
     frame_rate: 1000
     playback_frame_rate: 60
     idle_loop_driven_mode: false
@@ -349,8 +315,8 @@ toolbars:
     lazyCollisionDetectionMode: true
 Body:
   "BodySelectionManager":
-    current_body_item: 8
-    current_link: "Chassis"
+    current_body_item: 5
+    current_link: "BODY"
   "KinematicFaultChecker":
     checkJointPositions: true
     angleMargin: 0
@@ -363,22 +329,17 @@ Body:
   "OperableSceneBody":
     scene_bodies:
       -
+        body_item: 2
+        show_cm: false
+        show_cm_projection: false
+        show_zmp: false
+      -
         body_item: 3
         show_cm: false
         show_cm_projection: false
         show_zmp: false
       -
-        body_item: 4
-        show_cm: false
-        show_cm_projection: false
-        show_zmp: false
-      -
         body_item: 5
-        show_cm: false
-        show_cm_projection: false
-        show_zmp: false
-      -
-        body_item: 8
         show_cm: false
         show_cm_projection: false
         show_zmp: false
@@ -416,7 +377,7 @@ viewAreas:
             -
               type: splitter
               orientation: vertical
-              sizes: [ 677, 224 ]
+              sizes: [ 676, 225 ]
               children:
                 -
                   type: pane
@@ -428,7 +389,7 @@ viewAreas:
         -
           type: splitter
           orientation: vertical
-          sizes: [ 178, 723 ]
+          sizes: [ 177, 724 ]
           children:
             -
               type: pane
@@ -436,7 +397,7 @@ viewAreas:
             -
               type: splitter
               orientation: vertical
-              sizes: [ 256, 463 ]
+              sizes: [ 257, 463 ]
               children:
                 -
                   type: pane

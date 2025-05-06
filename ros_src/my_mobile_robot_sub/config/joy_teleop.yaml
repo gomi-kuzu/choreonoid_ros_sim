@@ -25,6 +25,20 @@
           scale: 2.0
           offset: 0
         z:
-          axis: 3
+          axis: 5
+          scale: 2.0
+          offset: 0
+    sub_craw:
+      type: topic
+      interface_type: geometry_msgs/msg/Vector3
+      topic_name: /cmd_sub_craw_joint_vel
+      deadman_buttons: [1]
+      axis_mappings:
+        y:
+          axis: 4
+          scale: 2.0
+          offset: 0
+        z:
+          axis: 5
           scale: 2.0
           offset: 0

@@ -1,0 +1,214 @@
+format: ChoreonoidBody
+formatVersion: 1.0
+angleUnit: radian
+name: Crawler
+
+links:
+  -
+    name: BODY
+    jointType: free
+    translation: [ -4.5, 1.5, 0.1 ]
+    elements:
+      -
+        type: RigidBody
+        centerOfMass: [ 0, 0, 0 ]
+        mass: 10.0
+        inertia: [
+          0.1, 0, 0,
+          0, 0.1, 0,
+          0, 0, 0.5 ]
+        elements:
+          -
+            type: Shape
+            appearance:
+              material: &green
+                diffuseColor: [ 0.0, 0.6, 0.0 ]
+                ambientIntensity: 0.3
+                specularColor: [ 0.7, 0.7, 0.7 ]
+                emissiveColor: [ 0, 0, 0 ]
+                shininess: 0.25
+                transparency: 0
+            geometry:
+              type: Box
+              size: [ 0.4, 0.3, 0.1 ]
+          -
+            type: Transform
+            translation: [ 0, 0, 0.05 ]
+            elements:
+              Shape:
+                appearance:
+                  material: *green
+                geometry:
+                  type: Extrusion
+                  crossSection: [
+                    0.2, 0,
+                    0.1, 0.1,
+                    -0.2, 0.1,
+                    -0.2, 0,
+                    0.2, 0 ]
+                  spine: [ 0, -0.1, 0, 0, 0.1, 0 ]
+  -
+    name: CRAWLER_TRACK_L
+    parent: BODY
+    translation: [ 0.0, 0.15, 0 ]
+    jointType: pseudo_continuous_track
+    jointAxis: [ 0, 1, 0 ]
+    jointId: 0
+    elements:
+      -
+        type: RigidBody
+        centerOfMass: [ 0, 0, 0 ]
+        mass: 1
+        inertia: [
+          0.02, 0, 0,
+          0, 0.02, 0,
+          0, 0, 0.02 ]
+        elements:
+          -
+            type: Transform
+            translation: [ 0, 0.05, 0 ]
+            elements: &CRAWLER
+              Shape:
+                appearance:
+                  material:
+                    diffuseColor: [ 0.1, 0.1, 0.1 ]
+                    ambientIntensity: 0.01
+                    specularColor: [ 0.3, 0.3, 0.3 ]
+                    emissiveColor: [ 0, 0, 0 ]
+                    shininess: 0.01
+                    transparency: 0
+                geometry:
+                  type: Extrusion
+                  crossSection: [
+                    -0.18, -0.1,
+                    0.18, -0.1,
+                    0.3, 0.06,
+                    -0.3, 0.06,
+                    -0.18, -0.1 ]
+                  spine: [ 0, -0.05, 0, 0, 0.05, 0 ]
+  -
+    name: CRAWLER_TRACK_R
+    parent: BODY
+    translation: [ 0.0, -0.15, 0 ]
+    jointType: pseudo_continuous_track
+    jointAxis: [ 0, 1, 0 ]
+    jointId: 1
+    elements:
+      -
+        type: RigidBody
+        centerOfMass: [ 0, 0, 0 ]
+        mass: 1
+        inertia: [
+          0.02, 0, 0,
+          0, 0.02, 0,
+          0, 0, 0.02 ]
+        elements:
+          -
+            type: Transform
+            translation: [ 0.0, -0.05, 0 ]
+            elements: *CRAWLER
+  -
+    name: PanLink
+    parent: BODY
+    translation: [ -0.02, 0, 0.15 ]
+    joint_name: PanJoint
+    joint_type: revolute
+    joint_id: 2
+    joint_axis: [ 0, 0, 1 ]
+    center_of_mass: [ 0, 0, 0.03 ]
+    mass: 1.0
+    inertia: [ 0.002, 0,    0,
+               0,    0.002, 0,
+               0,    0,     0.003 ]
+    elements:
+      -
+        type: Shape
+        translation: [ 0, 0, 0.01 ]
+        rotation: [ 1, 0, 0, 1.5708 ]
+        geometry: { type: Cylinder, radius: 0.08, height: 0.02 }
+        appearance: &GRAY
+          material: { diffuse: [ 0.5, 0.5, 0.5 ] }
+      -
+        type: Transform
+        translation: [ 0, 0.07, 0.065 ]
+        elements:
+          - &PanFrame
+            type: Shape
+            geometry: { type: Box, size: [ 0.02, 0.02, 0.13 ] }
+            appearance: *GRAY
+      -
+        type: Transform
+        translation: [ 0, -0.07, 0.065 ]
+        elements: *PanFrame
+  -
+    name: TiltLink
+    parent: PanLink
+    translation: [ 0, 0, 0.12 ]
+    joint_name: TiltJoint
+    joint_type: revolute
+    joint_id: 3
+    joint_axis: [ 0, 1, 0 ]
+    mass: 1.0
+    inertia: [ 0.001, 0,     0,
+               0,     0.001, 0,
+               0,     0,     0.002 ]
+    elements:
+      -
+        type: Shape
+        rotation: [ 1, 0, 0, 1.5708 ]
+        geometry: { type: Cylinder, radius: 0.06, height: 0.02 }
+        appearance: *GRAY
+      -
+        type: RangeSensor
+        name: LiDAR
+        translation: [ 0, 0, 0.025 ]
+        optical_frame: robotics
+        yaw_range: 270.0
+        yaw_step: 1.0
+        scan_rate: 10
+        max_distance: 10.0
+        detection_rate: 0.9
+        error_deviation: 0.005
+        elements:
+          -
+            type: Shape
+            rotation: [ 1, 0, 0, 1.5708 ]
+            geometry: { type: Cylinder, radius: 0.05, height: 0.03 }
+            appearance:
+              material: { diffuse: [ 0, 0, 1 ], specular: [ 1, 1, 1 ] }
+      -
+        type: Camera
+        name: RealSense
+        translation: [ 0.06, 0, -0.02 ]
+        rotation: [ [ 0, 1, 0, 1.5708 ], [ 0, 0, 1, 1.5708 ] ]
+        optical_frame: cv
+        format: COLOR_DEPTH
+        field_of_view: 62
+        width: 320
+        height: 240
+        frame_rate: 30
+        detection_rate: 0.9
+        error_deviation: 0.005
+        elements:
+          -
+            type: Transform
+            translation: [ 0, 0, -0.012 ]
+            elements:
+              -
+                type: Shape
+                geometry: { type: Box, size: [ 0.064, 0.022, 0.024 ] }
+                appearance: &SILVER
+                  material: { diffuse: [ 0.8, 0.8, 0.8 ], specular: [ 1, 1, 1 ] }
+              -
+                type: Transform
+                translation: [ 0.032, 0, 0 ]
+                elements:
+                  - &REAL_SENSE_SIDE
+                    type: Shape
+                    rotation: [ 1, 0, 0, 1.5708 ]
+                    geometry: { type: Cylinder, radius: 0.011, height: 0.024 }
+                    appearance: *SILVER
+              -
+                type: Transform
+                translation: [ -0.032 ,0, 0 ]
+                elements: *REAL_SENSE_SIDE
