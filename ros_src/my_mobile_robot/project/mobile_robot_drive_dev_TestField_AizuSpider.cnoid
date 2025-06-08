@@ -82,7 +82,7 @@ items:
             record_collision_data: false
             controller_options: ""
             block_scene_view_edit_mode: false
-            time_sync_items: [ 9 ]
+            time_sync_items: [ 8 ]
             dynamicsMode: "Forward dynamics"
             integrationMode: semi-implicit_euler
             gravity: [ 0, 0, -9.80665 ]
@@ -99,21 +99,21 @@ items:
             oldAccelSensorMode: false
         -
           id: 5
-          name: "Crawler"
+          name: "AizuSpider"
           plugin: Body
           class: BodyItem
           is_checked: true
           data:
-            file: "../model/crawler_mark3.body"
+            file: "../model/AizuSpider/AizuSpiderNS.body"
             format: CHOREONOID-BODY
-            rootPosition: [ -20.3274097, 18.1164224, -805.415006 ]
+            rootPosition: [ 0.928317225, 1.10173302, 0.532908369 ]
             rootAttitude: [
-              -0.498962654, 0.366998724, 0.785078472,
-              0.585437741, 0.810688082, -0.00689093245,
-              -0.638982724, 0.456176249, -0.619357981 ]
-            jointDisplacements: [ 0, 0, -0.72694, 2.54272, -128.572, -142.208 ]
-            initialJointDisplacements: [ 0, 0, 0, 0, 0, 0 ]
-            initialRootPosition: [ -4.5, 1.5, 0.1 ]
+              0.915391521, -0.180100213, -0.36003094,
+              0.244555246, -0.461612624, 0.852705411,
+              -0.319767253, -0.868606757, -0.37851183 ]
+            jointDisplacements: [ -27.502, -32.1429, 750.671, 750.671, 0, 0, 0, 0, 0, 0 ]
+            initialJointDisplacements: [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+            initialRootPosition: [ -4.5, 1.5, 0.03503 ]
             initialRootAttitude: [
               1, 0, 0,
               0, 1, 0,
@@ -126,68 +126,29 @@ items:
           children:
             -
               id: 6
-              name: "DriveController"
+              name: "baseController"
               plugin: Body
               class: SimpleControllerItem
               data:
                 isNoDelayMode: false
                 controllerOptions: ""
-                controller: "MyCrawlerDriveController"
+                controller: "MyAizuSpiderDriveController"
                 base_directory: "Controller directory"
                 reloading: false
                 export_symbols: false
             -
               id: 7
-              name: "SubDriveController"
+              name: "SimpleController"
               plugin: Body
               class: SimpleControllerItem
               is_selected: true
               data:
                 isNoDelayMode: false
                 controllerOptions: ""
-                controller: "MySubCrawlerDriveController"
+                controller: "MyASSubCrawlerDriveController"
                 base_directory: "Controller directory"
                 reloading: false
                 export_symbols: false
-            -
-              id: 8
-              name: "PantiltController"
-              plugin: Body
-              class: SimpleControllerItem
-              data:
-                isNoDelayMode: false
-                controllerOptions: ""
-                controller: "MyMobileRobotPanTiltController"
-                base_directory: "Controller directory"
-                reloading: false
-                export_symbols: false
-    -
-      id: 10
-      name: "DoubleArmV7"
-      plugin: Body
-      class: BodyItem
-      data:
-        file: "../../choreonoid/share/model/DoubleArmV7/DoubleArmV7S.body"
-        format: CHOREONOID-BODY
-        rootPosition: [ 0, 0, 0.52 ]
-        rootAttitude: [
-          1, 0, 0,
-          0, 1, 0,
-          0, 0, 1 ]
-        jointDisplacements: [
-          0, 0, -70, 150, 0, 0, 0, 0, 0, 0,
-          0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-          0, 0, 0, 0, 0, 0 ]
-        initialRootPosition: [ 0, 0, 0.52 ]
-        initialRootAttitude: [
-          1, 0, 0,
-          0, 1, 0,
-          0, 0, 1 ]
-        fix_root: false
-        collisionDetection: true
-        selfCollisionDetection: false
-        lock_location: false
-        scene_sensitive: true
 views:
   -
     id: 0
@@ -204,7 +165,7 @@ views:
     class: ItemTreeView
     mounted: true
     state:
-      expanded: [ 1, 5, 7 ]
+      expanded: [ 1, 2, 5, 6 ]
   -
     id: 3
     plugin: Base
@@ -236,9 +197,9 @@ views:
         -
           camera: [ System, Perspective ]
           isCurrent: true
-          eye: [ -10.2249, 3.46038, 6.16082 ]
-          direction: [ 0.717667, -0.287586, -0.634231 ]
-          up: [ 0.588722, -0.235915, 0.773144 ]
+          eye: [ -3.21306, -0.466999, 3.61914 ]
+          direction: [ 0.754715, 0.309234, -0.578602 ]
+          up: [ 0.535402, 0.219374, 0.81561 ]
         -
           camera: [ System, Orthographic ]
           orthoHeight: 20
@@ -421,7 +382,7 @@ views:
     mounted: true
 toolbars:
   "TimeBar":
-    current_time: 34.641
+    current_time: 109.482
     min_time: 0
     max_time: 1364.7
     frame_rate: 1000
@@ -445,7 +406,7 @@ toolbars:
 Body:
   "BodySelectionManager":
     current_body_item: 5
-    current_link: "BODY"
+    current_link: "CHASSIS"
   "KinematicFaultChecker":
     checkJointPositions: true
     angleMargin: 0
@@ -472,11 +433,6 @@ Body:
         show_cm: false
         show_cm_projection: false
         show_zmp: false
-      -
-        body_item: 10
-        show_cm: false
-        show_cm_projection: false
-        show_zmp: false
   "SplineFilterDialog":
     isInputFrameRateSpecified: false
     inputFrameRate: 200
@@ -499,7 +455,7 @@ viewAreas:
             -
               type: splitter
               orientation: vertical
-              sizes: [ 451, 450 ]
+              sizes: [ 483, 481 ]
               children:
                 -
                   type: pane
@@ -511,7 +467,7 @@ viewAreas:
             -
               type: splitter
               orientation: vertical
-              sizes: [ 676, 225 ]
+              sizes: [ 723, 241 ]
               children:
                 -
                   type: pane
@@ -523,7 +479,7 @@ viewAreas:
         -
           type: splitter
           orientation: vertical
-          sizes: [ 177, 724 ]
+          sizes: [ 189, 775 ]
           children:
             -
               type: pane
@@ -531,7 +487,7 @@ viewAreas:
             -
               type: splitter
               orientation: vertical
-              sizes: [ 257, 463 ]
+              sizes: [ 275, 496 ]
               children:
                 -
                   type: pane

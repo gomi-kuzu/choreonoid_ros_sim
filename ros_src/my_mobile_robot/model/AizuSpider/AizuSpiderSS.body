@@ -1,0 +1,53 @@
+format: ChoreonoidBody
+formatVersion: 1.0
+angleUnit: degree
+name: AizuSpider
+rootLink: CHASSIS
+
+links:
+  - # Main body
+    type: SubBody
+    uri: "AizuSpiderNS.body"
+    translation: [ 0, 0, 0.03503 ]
+    jointType: free
+
+  - # Arm 1
+    type: SubBody
+    uri: "../JACO2/JACO2.body"
+    parent: CHASSIS
+    translation: [ -0.06320, -0.094, 0.5150 ]
+    rotation: [ [ 0, 1, 0, 90 ], [ 0, 0, 1, 90 ] ]
+    jointType: fixed
+    jointIdOffset: 4
+    devicePrefix: ARM_
+
+standardPose: [
+  # Flippers
+  0, 0, 0, 0,
+  # Arm 1
+  -90, 151, 27, -93, 6, 100, 0, 0, 0
+  ]
+
+# TODO: Share the following information with other AizuSpider models
+collision_detection_rules:
+  - disabled_link_chain_level: 1
+  - disabled_link_group: [ # Chassis
+      CHASSIS, R_TRACK, L_TRACK,
+      FR_FLIPPER, FL_FLIPPER, BR_FLIPPER, BL_FLIPPER,
+      BASE, SHOULDER ]
+  - disabled_link_group: [ # Front sub tracks
+      CHASSIS, R_TRACK, L_TRACK,
+      FR_FLIPPER, FL_FLIPPER, BR_FLIPPER, BL_FLIPPER,
+      FR_SUB_TRACK, FL_SUB_TRACK,
+      BASE, SHOULDER ]
+  - disabled_link_group: [ # Back sub tracks
+      CHASSIS, R_TRACK, L_TRACK,
+      FR_FLIPPER, FL_FLIPPER, BR_FLIPPER, BL_FLIPPER,
+      BR_SUB_TRACK, BL_SUB_TRACK,
+      BASE, SHOULDER ]
+  - disabled_link_group: [ # Arm
+      BASE, ARM ]
+  - disabled_link_group: [ # Fore arm
+      FOREARM, WRIST1, WRIST2, HAND ]
+  - disabled_link_group: [ # Fingers
+      FINGER1, FINGER2, FINGER3 ]
