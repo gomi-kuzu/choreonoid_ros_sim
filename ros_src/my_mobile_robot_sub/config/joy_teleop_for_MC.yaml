@@ -1,0 +1,38 @@
+/joy_teleop:
+  ros__parameters:
+    UpDown:
+      type: topic
+      interface_type: geometry_msgs/msg/Vector3
+      topic_name: /cmd_up_down
+      deadman_buttons: [6]
+      axis_mappings:
+        x:
+          button: 10
+          scale: 1.0
+          offset: 0
+        y:
+          axis: 0
+          scale: 1.0
+          offset: 0
+        z:
+          axis: 1
+          scale: 1.0
+          offset: 0
+    ForwardBackward:
+      type: topic
+      interface_type: geometry_msgs/msg/Vector3
+      topic_name: /cmd_for_back
+      deadman_buttons: [7]
+      axis_mappings:
+        x:
+          button: 11
+          scale: 1.0
+          offset: 0
+        y:
+          axis: 2
+          scale: 1.0
+          offset: 0
+        z:
+          axis: 3
+          scale: 1.0
+          offset: 0

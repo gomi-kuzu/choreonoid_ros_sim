@@ -1,0 +1,7 @@
+<launch>
+    <node pkg="joy" exec="joy_node" name="joy" respawn="true"/>
+    <node pkg="joy_teleop" exec="joy_teleop" name="joy_teleop">
+        <param from=
+            "$(find-pkg-share my_mobile_robot_sub)/config/joy_teleop_for_MC.yaml"/>
+    </node>
+</launch>
